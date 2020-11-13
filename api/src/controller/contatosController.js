@@ -84,7 +84,27 @@ const deleteContatoById = (request, response) => {
 }
 
 const updatePhoneById = (request, response) => {
+    const id = request.params.id;
+    const celularBody = request.body;
+    const update = {new:true}
 
+    contatoCollections.findByIdAndUpdate(
+        id, 
+        celularBody, 
+        update,
+        (error,contato)=>{
+
+            if(error) {
+                return response.status(500).send(error)
+            } else if (contato) {
+                return response.status(200).send({
+                    mensagem: "Celular atualizado com sucesso.",
+                    contato});
+            } else {
+                return response.status(404).send({mensagem: "O contato não foi encontrado."})
+        }
+    
+    });
 }
 
 const updateContato = (request, response) => {
@@ -99,7 +119,7 @@ const updateContato = (request, response) => {
         (error, contato) => {
             if(error){
                 return response.status(500).send({
-                    mensagem: "Não foi possível atualizar o contato",
+                    mensagem: "Não foi possível atualizar o contato.",
                     error
                 });
             }else{
