@@ -8,7 +8,7 @@ router.post("/criar", controller.addContato);
 router.get("/nome/:nome", controller.getByNome);
 router.get("/id/:id", controller.getById);
 router.delete("/deletar/:id", controller.deleteContatoById); //deletar pelo id
-router.put("/atualizar/telefone/:id",); //atualizar apenas o telefone
-router.patch("atualizar/:id",); //atualizar o contato completo menos o id
+router.patch("/atualizar/:id", controller.updatePhoneById); //atualizar apenas o telefone
+router.put("/atualizar", controller.updateContato); //atualizar o contato completo menos o id
 
 module.exports = router;

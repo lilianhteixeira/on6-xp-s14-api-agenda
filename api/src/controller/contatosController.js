@@ -70,17 +70,46 @@ const getById = (request, response) => {
 }
 
 const deleteContatoById = (request, response) => {
-    const idParam = request.params.id;
+    const id = request.params.id;
 
-    contatoCollections.findByIdAndDelete(idParam, (error, contatoID)=>{
+    contatoCollections.findByIdAndDelete(id, (error, contatoID)=>{
         if(error){
-            return response.status(500).send(error)
+            return response.status(500).send(error);
         }else if(contatoID){
-            return response.status(200).send({mensagem:"Contato deletado com sucesso."})
+            return response.status(200).send("Contato deletado com sucesso.");
         }else{
-            return response.status(404).send("O contato informado não existe.")
+            return response.status(404).send("O contato informado não existe.");
         }
     })
+}
+
+const updatePhoneById = (request, response) => {
+
+}
+
+const updateContato = (request, response) => {
+    const id = request.query.id;
+    const contatoBody = request.body;
+    const update = {new:true}
+
+    contatoCollections.findByIdAndUpdate(
+        id,
+        contatoBody,
+        update,
+        (error, contato) => {
+            if(error){
+                return response.status(500).send({
+                    mensagem: "Não foi possível atualizar o contato",
+                    error
+                });
+            }else{
+                return response.status(200).send({
+                    mensagem: "Contato atualizado com sucesso.",
+                    contato
+                });
+            }
+        }
+    );
 }
 
 module.exports = {
@@ -88,5 +117,7 @@ module.exports = {
     addContato,
     getByNome,
     getById,
-    deleteContatoById
+    deleteContatoById,
+    updatePhoneById,
+    updateContato
 }
